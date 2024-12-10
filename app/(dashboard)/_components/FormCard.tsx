@@ -1,6 +1,6 @@
 "use client";
 
-import { DeleteForm } from "@/app/actions/form";
+import { DeleteForm } from "@/app/_actions/form";
 import {
   AlertDialog,
   AlertDialogAction,

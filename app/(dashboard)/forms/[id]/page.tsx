@@ -1,4 +1,4 @@
-import { GetFormById, GetFormSubmissions } from "@/app/actions/form";
+import { GetFormById, GetFormSubmissions } from "@/app/_actions/form";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import {

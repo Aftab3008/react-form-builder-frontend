@@ -1,30 +1,28 @@
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import { useDesginerStore } from '@/store/store';
-import { useDraggable, useDroppable } from '@dnd-kit/core';
-import { Trash } from 'lucide-react';
-import { useState } from 'react';
-import { FormElementInstance, FormElements } from './FormElements';
-import { toast } from '@/components/ui/use-toast';
-import { deleteElementInstance } from '@/app/actions/form';
-import { useRouter } from 'next/navigation';
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { useDesginerStore } from "@/store/store";
+import { useDraggable, useDroppable } from "@dnd-kit/core";
+import { Trash } from "lucide-react";
+import { useState } from "react";
+import { FormElementInstance, FormElements } from "./FormElements";
+import { toast } from "@/components/ui/use-toast";
+import { deleteElementInstance } from "@/app/_actions/form";
+import { useRouter } from "next/navigation";
 
-export default
-  function DesginerElementWrapper({
-    element,
-    formId,
-  }: {
-    element: FormElementInstance;
-    formId: number;
-  }) {
-  const router = useRouter()
+export default function DesginerElementWrapper({
+  element,
+  formId,
+}: {
+  element: FormElementInstance;
+  formId: number;
+}) {
+  const router = useRouter();
   const [mouseOver, setMouseOver] = useState(false);
   const DesignerElement = FormElements[element.type].designerComponent;
-  const { removeElement, setSelectedElement } =
-    useDesginerStore();
+  const { removeElement, setSelectedElement } = useDesginerStore();
 
   const topHalf = useDroppable({
-    id: element.id + '-top',
+    id: element.id + "-top",
     data: {
       type: element.type,
       elementId: element.id,
@@ -33,7 +31,7 @@ export default
   });
 
   const bottomHalf = useDroppable({
-    id: element.id + '-bottom',
+    id: element.id + "-bottom",
     data: {
       type: element.type,
       elementId: element.id,
@@ -42,7 +40,7 @@ export default
   });
 
   const draggable = useDraggable({
-    id: element.id + '-drag-handle',
+    id: element.id + "-drag-handle",
     data: {
       type: element.type,
       elementId: element.id,
@@ -52,20 +50,19 @@ export default
 
   async function removeElementFromDatabase() {
     try {
-      await deleteElementInstance(formId, element.id)
+      await deleteElementInstance(formId, element.id);
 
       toast({
         title: "Success",
         description: "Element deleted from database",
-      })
+      });
 
-      router.refresh()
-
+      router.refresh();
     } catch (error) {
       toast({
         title: "Error",
         description: "Something went wrong, please try again later",
-      })
+      });
     }
   }
 
@@ -81,7 +78,8 @@ export default
         onClick={(e) => {
           e.stopPropagation();
           setSelectedElement(element);
-        }}>
+        }}
+      >
         <div
           ref={topHalf.setNodeRef}
           className="absolute h-1/2 w-full rounded-t-md"
@@ -95,13 +93,14 @@ export default
             <div className="absolute right-0 z-10 h-full">
               <Button
                 className="flex h-full justify-center rounded-md rounded-l-none border bg-red-500"
-                size={'icon'}
-                variant={'outline'}
+                size={"icon"}
+                variant={"outline"}
                 onClick={(e) => {
                   e.stopPropagation();
                   removeElement(element.id);
-                  removeElementFromDatabase()
-                }}>
+                  removeElementFromDatabase();
+                }}
+              >
                 <Trash className="h-6 w-6" />
               </Button>
             </div>
@@ -115,9 +114,10 @@ export default
         )}
         <div
           className={cn(
-            'pointer-events-none flex h-[120px] w-full items-center rounded-md bg-accent/40 px-4 py-2',
-            mouseOver && 'opacity-30'
-          )}>
+            "pointer-events-none flex h-[120px] w-full items-center rounded-md bg-accent/40 px-4 py-2",
+            mouseOver && "opacity-30"
+          )}
+        >
           <DesignerElement elementInstance={element} />
         </div>
         {bottomHalf.isOver && (

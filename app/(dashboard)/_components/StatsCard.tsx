@@ -1,4 +1,4 @@
-import { GetFormStats } from "@/app/actions/form";
+import { GetFormStats } from "@/app/_actions/form";
 import {
   EyeIcon,
   LogOut,

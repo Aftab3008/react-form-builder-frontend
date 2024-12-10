@@ -1,4 +1,4 @@
-import { PublishForm } from '@/app/actions/form';
+import { PublishForm } from "@/app/_actions/form";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,13 +9,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
+} from "@/components/ui/alert-dialog";
 
-import { Button } from '@/components/ui/button';
-import { toast } from '@/components/ui/use-toast';
-import { Globe, Loader2 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { useTransition } from 'react';
+import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
+import { Globe, Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 
 export default function PublishFormBtn({ id }: { id: number }) {
   const router = useRouter();
@@ -24,17 +24,17 @@ export default function PublishFormBtn({ id }: { id: number }) {
   async function publishForm() {
     try {
       // Publish form
-      await PublishForm(id)
+      await PublishForm(id);
       toast({
-        title: 'Success',
-        description: 'Your form has been published.',
+        title: "Success",
+        description: "Your form has been published.",
       });
       router.refresh();
     } catch (error) {
       toast({
-        title: 'Error',
-        description: 'Something went wrong. Please try again later.',
-        variant: 'destructive',
+        title: "Error",
+        description: "Something went wrong. Please try again later.",
+        variant: "destructive",
       });
     }
   }
@@ -68,8 +68,9 @@ export default function PublishFormBtn({ id }: { id: number }) {
             disabled={loading}
             onClick={() => {
               setTransition(publishForm);
-            }}>
-            {loading && <Loader2 className='mr-2 h-5 w-5 animate-spin' />}
+            }}
+          >
+            {loading && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
             Publish
           </AlertDialogAction>
         </AlertDialogFooter>

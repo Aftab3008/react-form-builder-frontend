@@ -1,4 +1,4 @@
-import { GetForm } from "@/app/actions/form";
+import { GetForm } from "@/app/_actions/form";
 import React from "react";
 import FormCard from "./FormCard";
 import { Form } from "@/types";

@@ -1,18 +1,17 @@
-'use client';
+"use client";
 
 import {
   FormElementInstance,
   FormElements,
-} from '@/app/(dashboard)/_components/FormElements';
-import { SubmitForm } from '@/app/actions/form';
-import { Button } from '@/components/ui/button';
-import { toast } from '@/components/ui/use-toast';
-import { soria } from '@/lib/fonts';
-import { cn } from '@/lib/utils';
-import { Loader } from 'lucide-react';
-import { useRef, useState, useTransition } from 'react';
-import reactStringReplace from 'react-string-replace';
-
+} from "@/app/(dashboard)/_components/FormElements";
+import { SubmitForm } from "@/app/_actions/form";
+import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
+import { soria } from "@/lib/fonts";
+import { cn } from "@/lib/utils";
+import { Loader } from "lucide-react";
+import { useRef, useState, useTransition } from "react";
+import reactStringReplace from "react-string-replace";
 
 interface Props {
   formUrl: string;
@@ -29,7 +28,7 @@ export default function FormSubmitComponent({ formUrl, content }: Props) {
 
   const validateForm: () => boolean = () => {
     for (const field of content) {
-      const actualValue = formValues.current[field.id] || '';
+      const actualValue = formValues.current[field.id] || "";
       const valid = FormElements[field.type].validate(field, actualValue);
 
       if (!valid) {
@@ -38,11 +37,11 @@ export default function FormSubmitComponent({ formUrl, content }: Props) {
     }
 
     if (Object.keys(formErrors.current).length > 0) {
-      return false
+      return false;
     }
 
     return true;
-  }
+  };
 
   const submitValues = (key: string, value: string) => {
     formValues.current[key] = value;
@@ -59,8 +58,8 @@ export default function FormSubmitComponent({ formUrl, content }: Props) {
       toast({
         title: "Form is invalid",
         description: "Please fill all required fields",
-        variant: 'destructive'
-      })
+        variant: "destructive",
+      });
       return;
     }
 
@@ -72,37 +71,36 @@ export default function FormSubmitComponent({ formUrl, content }: Props) {
       toast({
         title: "Error",
         description: "Something went wrong, please try again later",
-        variant: 'destructive'
-      })
+        variant: "destructive",
+      });
     }
   };
 
   if (submitted) {
     return (
-      <div className='flex h-full w-full items-center justify-center p-8'>
+      <div className="flex h-full w-full items-center justify-center p-8">
         <div
           key={renderKey}
-          className='flex w-full max-w-[620px] grow flex-col gap-4 overflow-y-auto rounded-xl border bg-accent/50 p-8 text-center shadow-md'>
-          <div className='flex flex-col gap-4'>
-            <h1 className={cn(soria.className, 'text-5xl font-extrabold')}>
-              {
-                reactStringReplace(
-                  '**Thank you** for submitting your form',
-                  /\*\*(.*)\*\*/g,
-                  (match, i) => (
-                    <span key={i} className='word-animation'>
-                      {match.split('/n').map((line, index) => (
-                        <span key={index}>
-                          {line}
-                          <br />
-                        </span>
-                      ))}
-                    </span>
-                  )
+          className="flex w-full max-w-[620px] grow flex-col gap-4 overflow-y-auto rounded-xl border bg-accent/50 p-8 text-center shadow-md"
+        >
+          <div className="flex flex-col gap-4">
+            <h1 className={cn(soria.className, "text-5xl font-extrabold")}>
+              {reactStringReplace(
+                "**Thank you** for submitting your form",
+                /\*\*(.*)\*\*/g,
+                (match, i) => (
+                  <span key={i} className="word-animation">
+                    {match.split("/n").map((line, index) => (
+                      <span key={index}>
+                        {line}
+                        <br />
+                      </span>
+                    ))}
+                  </span>
                 )
-              }
+              )}
             </h1>
-            <p className='text-sm'>
+            <p className="text-sm">
               Your form has been submitted successfully.
               <br />
               You can close this page now.
@@ -114,10 +112,11 @@ export default function FormSubmitComponent({ formUrl, content }: Props) {
   }
 
   return (
-    <div className='flex h-full w-full items-center justify-center p-8'>
+    <div className="flex h-full w-full items-center justify-center p-8">
       <div
         key={renderKey}
-        className='flex w-full max-w-[620px] grow flex-col gap-4 overflow-y-auto rounded-xl border bg-accent/50 p-8 shadow-md'>
+        className="flex w-full max-w-[620px] grow flex-col gap-4 overflow-y-auto rounded-xl border bg-accent/50 p-8 shadow-md"
+      >
         {content.map((element) => {
           const FormElement = FormElements[element.type].formComponent;
           return (
@@ -131,14 +130,12 @@ export default function FormSubmitComponent({ formUrl, content }: Props) {
           );
         })}
         <Button
-          className='mt-8 text-zinc-50'
+          className="mt-8 text-zinc-50"
           onClick={() => {
-            startTransition(submitForm)
+            startTransition(submitForm);
           }}
         >
-          {pending && (
-            <Loader className='mr-2 animate-spin' />
-          )}
+          {pending && <Loader className="mr-2 animate-spin" />}
           Submit
         </Button>
       </div>

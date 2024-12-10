@@ -1,5 +1,5 @@
 import FormBuilder from "@/app/(dashboard)/_components/FormBuilder";
-import { GetFormById } from "@/app/actions/form";
+import { GetFormById } from "@/app/_actions/form";
 import React from "react";
 
 export default async function BuilderPage({

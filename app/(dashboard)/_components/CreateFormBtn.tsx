@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
 import {
   Dialog,
@@ -12,9 +12,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 
-import { CreateForm } from '@/app/actions/form';
+import { CreateForm } from "@/app/_actions/form";
 import {
   Form,
   FormControl,
@@ -22,13 +22,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { toast } from '@/components/ui/use-toast';
-import { FormSchema, formSchema } from '@/schemas/form';
-import { Loader, Plus } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/components/ui/use-toast";
+import { FormSchema, formSchema } from "@/schemas/form";
+import { Loader, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function CreateFormBtn() {
   const router = useRouter();
@@ -42,21 +42,21 @@ export default function CreateFormBtn() {
       const formId = await CreateForm(values);
 
       toast({
-        title: 'Success',
-        description: 'Form created successfully',
+        title: "Success",
+        description: "Form created successfully",
       });
 
       router.push(`/builder/${formId}`);
 
       form.reset({
-        name: '',
-        description: '',
+        name: "",
+        description: "",
       });
     } catch (error) {
       toast({
-        title: 'Error',
+        title: "Error",
         description: "Couldn't create form",
-        variant: 'destructive',
+        variant: "destructive",
       });
     }
   }
@@ -65,8 +65,9 @@ export default function CreateFormBtn() {
     <Dialog>
       <DialogTrigger asChild>
         <Button
-          variant={'outline'}
-          className="group flex h-[300px] w-full flex-col items-center justify-center gap-4 border border-dashed border-primary/20 hover:cursor-pointer hover:border-primary">
+          variant={"outline"}
+          className="group flex h-[300px] w-full flex-col items-center justify-center gap-4 border border-dashed border-primary/20 hover:cursor-pointer hover:border-primary"
+        >
           <Plus className="h-8 w-8 text-muted-foreground group-hover:text-primary" />
           <p className="text-base font-bold text-muted-foreground group-hover:text-primary">
             Create New Form
@@ -81,9 +82,7 @@ export default function CreateFormBtn() {
 
         {/* Form input */}
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-2">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
             <FormField
               control={form.control}
               name="name"
@@ -129,7 +128,8 @@ export default function CreateFormBtn() {
           <Button
             onClick={form.handleSubmit(onSubmit)}
             disabled={form.formState.isSubmitting}
-            className="mt-4 w-full font-semibold text-zinc-50">
+            className="mt-4 w-full font-semibold text-zinc-50"
+          >
             {!form.formState.isSubmitting && <span>Create Form</span>}
             {form.formState.isSubmitting && (
               <div className="inline-flex items-center gap-2">
