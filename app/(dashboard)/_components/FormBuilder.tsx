@@ -1,30 +1,31 @@
-'use client';
+"use client";
 
-import PreviewDialogBtn from '@/app/(dashboard)/_components/PreviewDialogBtn';
-import SaveFormBtn from '@/app/(dashboard)/_components/SaveFormBtn';
-import { Form } from '@prisma/client';
-import React, { useEffect } from 'react';
-import PublishFormBtn from './PublishFormBtn';
-import Designer from '@/app/(dashboard)/_components/Designer';
+import PreviewDialogBtn from "@/app/(dashboard)/_components/PreviewDialogBtn";
+import SaveFormBtn from "@/app/(dashboard)/_components/SaveFormBtn";
+import React, { useEffect } from "react";
+import PublishFormBtn from "./PublishFormBtn";
+import Designer from "@/app/(dashboard)/_components/Designer";
 import {
   DndContext,
   MouseSensor,
   TouchSensor,
   useSensor,
   useSensors,
-} from '@dnd-kit/core';
-import DragOverlayWrapper from './DragOverlayWrapper';
-import { useDesginerStore } from '@/store/store';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { toast } from '@/components/ui/use-toast';
-import { Copy } from 'lucide-react';
-import Link from 'next/link';
-import Confetti from 'react-confetti';
+} from "@dnd-kit/core";
+import DragOverlayWrapper from "./DragOverlayWrapper";
+import { useDesginerStore } from "@/store/store";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
+import { Copy } from "lucide-react";
+import Link from "next/link";
+import Confetti from "react-confetti";
+import { Form } from "@/types";
 
 export default function FormBuilder({ form }: { form: Form }) {
   const { setElements } = useDesginerStore();
-  const { innerWidth, innerHeight } = typeof window !== 'undefined' ? window : { innerWidth: 0, innerHeight: 0 };
+  const { innerWidth, innerHeight } =
+    typeof window !== "undefined" ? window : { innerWidth: 0, innerHeight: 0 };
 
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
@@ -46,14 +47,22 @@ export default function FormBuilder({ form }: { form: Form }) {
     setElements(elements);
   }, [form, setElements]);
 
-  const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : '';
+  const origin =
+    typeof window !== "undefined" && window.location.origin
+      ? window.location.origin
+      : "";
 
   const shareUrl = `${origin}/submit/${form.shareUrl}`;
 
   if (form.published) {
     return (
       <>
-        <Confetti width={innerWidth} height={innerHeight} recycle={false} numberOfPieces={1000} />
+        <Confetti
+          width={innerWidth}
+          height={innerHeight}
+          recycle={false}
+          numberOfPieces={1000}
+        />
         <div className="flex h-full w-full flex-col items-center justify-center overflow-hidden">
           <h2 className="mb-10 border-b pb-2 text-center text-4xl font-bold uppercase">
             {form.name} is Published
@@ -65,33 +74,27 @@ export default function FormBuilder({ form }: { form: Form }) {
               Share this form to your audience by sending the link below.
             </p>
             <div className="my-4 flex w-full flex-col items-center gap-2 border-b pb-4">
-              <Input
-                readOnly
-                value={shareUrl}
-              />
+              <Input readOnly value={shareUrl} />
               <Button
                 onClick={() => {
                   navigator.clipboard.writeText(shareUrl);
                   toast({
-                    title: 'Copied',
-                    description: 'Copied to clipboard.',
+                    title: "Copied",
+                    description: "Copied to clipboard.",
                   });
                 }}
                 className="w-full text-zinc-50"
-                size={'sm'}>
+                size={"sm"}
+              >
                 <Copy className="mr-2 h-4 w-4" />
                 Copy
               </Button>
             </div>
             <div className="flex justify-between">
-              <Button
-                asChild
-                variant={'link'}>
-                <Link href={'/dashboard'}>Go back to dashboard</Link>
+              <Button asChild variant={"link"}>
+                <Link href={"/dashboard"}>Go back to dashboard</Link>
               </Button>
-              <Button
-                asChild
-                variant={'link'}>
+              <Button asChild variant={"link"}>
                 <Link href={`/forms/${form.id}`}>Form Details</Link>
               </Button>
             </div>

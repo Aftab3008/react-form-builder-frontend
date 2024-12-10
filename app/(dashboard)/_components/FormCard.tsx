@@ -24,7 +24,6 @@ import {
 } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
 import { Form } from "@/types";
-// import { Form } from '@prisma/client';
 import { formatDistance } from "date-fns";
 import {
   ArrowRight,
