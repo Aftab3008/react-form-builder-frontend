@@ -20,7 +20,7 @@ export async function GetFormStats() {
   return response.data;
 }
 
-export async function CreateForm(data: { name: string; description: string }) {
+export async function CreateForm(data: { name: string; description?: string }) {
   const user = await getCurrentUser();
   const response = await axios.post(`${API_BASE_URL}/forms/create`, {
     ...data,
