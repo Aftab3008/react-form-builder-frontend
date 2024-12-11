@@ -1,5 +1,5 @@
 export type Form = {
-  id: number;
+  id: string;
   userId: string;
   createdAt: Date;
   published: boolean;
@@ -12,10 +12,19 @@ export type Form = {
 };
 
 export type FormSubmissions = {
-  id: number;
+  id: string;
   createdAt: Date;
-  formId: number;
+  formId: string;
   content: string;
+};
+
+export type User = {
+  id: string;
+  email: string;
+  password: string;
+  name: string;
+  createdAt: Date;
+  refreshToken?: string | null;
 };
 
 export interface FormWithRelations extends Form {

@@ -1,10 +1,10 @@
 "use client";
 
-import PreviewDialogBtn from "@/app/(dashboard)/_components/PreviewDialogBtn";
-import SaveFormBtn from "@/app/(dashboard)/_components/SaveFormBtn";
+import PreviewDialogBtn from "@/app/(root)/(dashboard)/_components/PreviewDialogBtn";
+import SaveFormBtn from "@/app/(root)/(dashboard)/_components/SaveFormBtn";
 import React, { useEffect } from "react";
 import PublishFormBtn from "./PublishFormBtn";
-import Designer from "@/app/(dashboard)/_components/Designer";
+import Designer from "@/app/(root)/(dashboard)/_components/Designer";
 import {
   DndContext,
   MouseSensor,

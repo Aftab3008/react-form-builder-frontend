@@ -1,19 +1,24 @@
-'use client';
+"use client";
 
-import { cn, idGenerator } from '@/lib/utils';
-import { useDesginerStore } from '@/store/store';
-import { useDndMonitor, useDroppable } from '@dnd-kit/core';
-import { DragEndEvent } from '@dnd-kit/core/dist/types';
-import DesginerElementWrapper from './DesginerElementWrapper';
-import DesignerSidebar from './DesignerSidebar';
-import { ElementsType, FormElements } from './FormElements';
+import { cn, idGenerator } from "@/lib/utils";
+import { useDesginerStore } from "@/store/store";
+import { useDndMonitor, useDroppable } from "@dnd-kit/core";
+import { DragEndEvent } from "@dnd-kit/core/dist/types";
+import DesginerElementWrapper from "./DesginerElementWrapper";
+import DesignerSidebar from "./DesignerSidebar";
+import { ElementsType, FormElements } from "./FormElements";
 
-export default function Designer({ formId }: { formId: number }) {
-  const { elements, addElement, selectedElement, setSelectedElement, removeElement } =
-    useDesginerStore();
+export default function Designer({ formId }: { formId: string }) {
+  const {
+    elements,
+    addElement,
+    selectedElement,
+    setSelectedElement,
+    removeElement,
+  } = useDesginerStore();
 
   const droppable = useDroppable({
-    id: 'designer-drop-area',
+    id: "designer-drop-area",
     data: {
       isDesignerDropArea: true,
     },
@@ -34,9 +39,8 @@ export default function Designer({ formId }: { formId: number }) {
       // If we're dropping a sidebar button over the designer drop area
       if (droppingSidebarBtnOverDesignerDropArea) {
         const type = active.data?.current?.type;
-        const newElement = FormElements[type as ElementsType].construct(
-          idGenerator()
-        );
+        const newElement =
+          FormElements[type as ElementsType].construct(idGenerator());
 
         addElement(elements.length, newElement);
         return;
@@ -58,15 +62,14 @@ export default function Designer({ formId }: { formId: number }) {
       // If we're dropping a sidebar button over a designer element
       if (droppingSidebarBtnOverDesignerElement) {
         const type = active.data?.current?.type;
-        const newElement = FormElements[type as ElementsType].construct(
-          idGenerator()
-        );
+        const newElement =
+          FormElements[type as ElementsType].construct(idGenerator());
 
         const overId = over.data?.current?.elementId;
 
         const overElementIndex = elements.findIndex((el) => el.id === overId);
         if (overElementIndex === -1) {
-          throw new Error('Could not find element index');
+          throw new Error("Could not find element index");
         }
 
         let indexForNewElement = overElementIndex;
@@ -95,7 +98,7 @@ export default function Designer({ formId }: { formId: number }) {
         const overElementIndex = elements.findIndex((el) => el.id === overId);
 
         if (activeElementIndex === -1 || overElementIndex === -1) {
-          throw new Error('Could not find element index');
+          throw new Error("Could not find element index");
         }
 
         const activeElement = { ...elements[activeElementIndex] };
@@ -117,13 +120,15 @@ export default function Designer({ formId }: { formId: number }) {
         className="w-full p-4"
         onClick={() => {
           if (selectedElement) setSelectedElement(null);
-        }}>
+        }}
+      >
         <div
           ref={droppable.setNodeRef}
           className={cn(
-            'bg-background max-w-[920px] h-full m-auto rounded-xl flex flex-col flex-grow items-center justify-start flex-1 overflow-auto',
-            droppable.isOver && 'ring-2 ring-primary ring-inset'
-          )}>
+            "bg-background max-w-[920px] h-full m-auto rounded-xl flex flex-col flex-grow items-center justify-start flex-1 overflow-auto",
+            droppable.isOver && "ring-2 ring-primary ring-inset"
+          )}
+        >
           {!droppable.isOver && elements.length === 0 && (
             <p className="flex grow items-center text-3xl font-bold text-muted-foreground">
               Drop here

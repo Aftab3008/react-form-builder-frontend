@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
 import {
   ElementsType,
-  FormElement
-} from '@/app/(dashboard)/_components/FormElements';
-import { Label } from '@radix-ui/react-label';
-import { Minus } from 'lucide-react';
-import { Separator } from '../ui/separator';
+  FormElement,
+} from "@/app/(root)/(dashboard)/_components/FormElements";
+import { Label } from "@radix-ui/react-label";
+import { Minus } from "lucide-react";
+import { Separator } from "../ui/separator";
 
-const type: ElementsType = 'SeperatorField';
+const type: ElementsType = "SeperatorField";
 
 export const SeparatorFieldFormElement: FormElement = {
   type,
@@ -18,7 +18,7 @@ export const SeparatorFieldFormElement: FormElement = {
   }),
   designerBtnElement: {
     icon: <Minus className="h-8 w-8" />,
-    label: 'Seperator Field',
+    label: "Seperator Field",
   },
   designerComponent: DesignerComponent,
   formComponent: FormComponent,
@@ -28,19 +28,18 @@ export const SeparatorFieldFormElement: FormElement = {
 };
 
 function FormComponent() {
-  return <Separator />
+  return <Separator />;
 }
 
 function DesignerComponent() {
   return (
     <div className="flex w-full flex-col gap-2">
-      <Label className='text-muted-foreground'>Paragraph Field</Label>
+      <Label className="text-muted-foreground">Paragraph Field</Label>
       <Separator />
     </div>
   );
 }
 
 function PropertiesComponent() {
-  return <p>No properties for this element</p>
+  return <p>No properties for this element</p>;
 }
-

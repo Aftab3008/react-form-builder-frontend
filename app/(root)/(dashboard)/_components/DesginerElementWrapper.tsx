@@ -14,7 +14,7 @@ export default function DesginerElementWrapper({
   formId,
 }: {
   element: FormElementInstance;
-  formId: number;
+  formId: string;
 }) {
   const router = useRouter();
   const [mouseOver, setMouseOver] = useState(false);

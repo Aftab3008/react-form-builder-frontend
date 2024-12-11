@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
 import {
   ElementsType,
   FormElement,
-  FormElementInstance
-} from '@/app/(dashboard)/_components/FormElements';
-import { useDesginerStore } from '@/store/store';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Label } from '@radix-ui/react-label';
-import { Space } from 'lucide-react';
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+  FormElementInstance,
+} from "@/app/(root)/(dashboard)/_components/FormElements";
+import { useDesginerStore } from "@/store/store";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Label } from "@radix-ui/react-label";
+import { Space } from "lucide-react";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import {
   Form,
   FormControl,
@@ -20,10 +20,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../ui/form';
-import { Slider } from '../ui/slider';
+} from "../ui/form";
+import { Slider } from "../ui/slider";
 
-const type: ElementsType = 'SpacerField';
+const type: ElementsType = "SpacerField";
 
 const extraAttributes = {
   height: 20,
@@ -42,7 +42,7 @@ export const SpacerFieldFormElement: FormElement = {
   }),
   designerBtnElement: {
     icon: <Space className="h-8 w-8" />,
-    label: 'Spacer Field',
+    label: "Spacer Field",
   },
   designerComponent: DesignerComponent,
   formComponent: FormComponent,
@@ -60,7 +60,7 @@ function FormComponent({
 
   const { height } = element.extraAttributes;
 
-  return <div style={{ height, width: "100%" }}></div>
+  return <div style={{ height, width: "100%" }}></div>;
 }
 
 type CustomInstance = FormElementInstance & {
@@ -78,8 +78,8 @@ function DesignerComponent({
 
   return (
     <div className="flex w-full flex-col gap-2">
-      <Label className='text-muted-foreground'>Spacer field: {height}px</Label>
-      <Space className='h-8 w-8' />
+      <Label className="text-muted-foreground">Spacer field: {height}px</Label>
+      <Space className="h-8 w-8" />
     </div>
   );
 }
@@ -124,7 +124,8 @@ function PropertiesComponent({
         onSubmit={(e) => {
           e.preventDefault();
         }}
-        className="space-y-4">
+        className="space-y-4"
+      >
         <FormField
           control={form.control}
           name="height"
@@ -143,7 +144,8 @@ function PropertiesComponent({
                 />
               </FormControl>
               <FormDescription>
-                Adding a height to the spacer field will make it visible in the designer
+                Adding a height to the spacer field will make it visible in the
+                designer
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -153,5 +155,3 @@ function PropertiesComponent({
     </Form>
   );
 }
-
-

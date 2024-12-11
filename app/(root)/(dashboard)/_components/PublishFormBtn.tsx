@@ -17,7 +17,7 @@ import { Globe, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 
-export default function PublishFormBtn({ id }: { id: number }) {
+export default function PublishFormBtn({ id }: { id: string }) {
   const router = useRouter();
   const [loading, setTransition] = useTransition();
 

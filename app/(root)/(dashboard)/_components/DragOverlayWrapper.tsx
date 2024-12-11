@@ -1,11 +1,11 @@
 import {
   ElementsType,
   FormElements,
-} from '@/app/(dashboard)/_components/FormElements';
-import { SidebarBtnElementOverlay } from '@/app/(dashboard)/_components/SidebarBtnElement';
-import { useDesginerStore } from '@/store/store';
-import { Active, DragOverlay, useDndMonitor } from '@dnd-kit/core';
-import { useState } from 'react';
+} from "@/app/(root)/(dashboard)/_components/FormElements";
+import { SidebarBtnElementOverlay } from "@/app/(root)/(dashboard)/_components/SidebarBtnElement";
+import { useDesginerStore } from "@/store/store";
+import { Active, DragOverlay, useDndMonitor } from "@dnd-kit/core";
+import { useState } from "react";
 
 export default function DragOverlayWrapper() {
   const { elements } = useDesginerStore();

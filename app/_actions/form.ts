@@ -1,20 +1,46 @@
 "use server";
 
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import { cookies } from "next/headers";
 
 const API_BASE_URL = process.env.SERVER_URL;
 
+const axiosInstance = axios.create({
+  baseURL: API_BASE_URL,
+});
+
+axiosInstance.interceptors.request.use(async (config) => {
+  const cookieStore = cookies();
+  const token = cookieStore.get("token")?.value;
+  if (token) {
+    config.headers["cookie"] = `token=${token}`;
+  }
+  return config;
+});
+
 class UserNotFoundErr extends Error {}
 
+export async function getUserFromCookies() {
+  const cookieStore = cookies();
+  const token = cookieStore.get("token");
+
+  if (!token) {
+    throw new Error("User token is missing");
+  }
+
+  return jwtDecode<{ userId: string }>(token.value);
+}
+
 async function getCurrentUser() {
-  const user = { id: "userId123" };
-  if (!user) throw new UserNotFoundErr();
-  return user;
+  const { userId } = await getUserFromCookies();
+  if (!userId) throw new UserNotFoundErr();
+  return { id: userId };
 }
 
 export async function GetFormStats() {
   const user = await getCurrentUser();
-  const response = await axios.get(`${API_BASE_URL}/forms/stats`, {
+  const response = await axiosInstance.get("/api/forms/stats", {
     params: { userId: user.id },
   });
   return response.data;
@@ -22,7 +48,7 @@ export async function GetFormStats() {
 
 export async function CreateForm(data: { name: string; description?: string }) {
   const user = await getCurrentUser();
-  const response = await axios.post(`${API_BASE_URL}/forms/create`, {
+  const response = await axiosInstance.post("/api/forms/create", {
     ...data,
     userId: user.id,
   });
@@ -31,76 +57,73 @@ export async function CreateForm(data: { name: string; description?: string }) {
 
 export async function GetForm() {
   const user = await getCurrentUser();
-  const response = await axios.get(`${API_BASE_URL}/forms`, {
+  const response = await axiosInstance.get("/api/forms", {
     params: { userId: user.id },
   });
   return response.data;
 }
 
-export async function GetFormById(id: String) {
+export async function GetFormById(id: string) {
   const user = await getCurrentUser();
-  const response = await axios.get(`${API_BASE_URL}/forms/${id}`, {
+  const response = await axiosInstance.get(`/api/forms/${id}`, {
     params: { userId: user.id },
   });
   return response.data;
 }
 
-export async function UpdateFormContent(id: number, jsonContent: string) {
+export async function UpdateFormContent(id: string, jsonContent: string) {
   const user = await getCurrentUser();
-  const response = await axios.put(`${API_BASE_URL}/forms/${id}/content`, {
+  const response = await axiosInstance.put(`/api/forms/${id}/content`, {
     userId: user.id,
     content: jsonContent,
   });
   return response.data;
 }
 
-export async function PublishForm(id: number) {
+export async function PublishForm(id: string) {
   const user = await getCurrentUser();
-  const response = await axios.put(`${API_BASE_URL}/forms/${id}/publish`, {
+  const response = await axiosInstance.put(`/api/forms/${id}/publish`, {
     userId: user.id,
   });
   return response.data;
 }
 
 export async function GetFormContentByUrl(shareUrl: string) {
-  const response = await axios.post(`${API_BASE_URL}/forms/content`, {
+  const response = await axiosInstance.post("/api/forms/content", {
     shareUrl,
   });
   return response.data;
 }
 
 export async function SubmitForm(formUrl: string, content: string) {
-  const response = await axios.post(`${API_BASE_URL}/forms/submit`, {
+  const response = await axiosInstance.post("/api/forms/submit", {
     formUrl,
     content,
   });
   return response.data;
 }
 
-export async function GetFormSubmissions(id: String) {
+export async function GetFormSubmissions(id: string) {
   const user = await getCurrentUser();
-  const response = await axios.get(`${API_BASE_URL}/forms/${id}/submissions`, {
+  const response = await axiosInstance.get(`/api/forms/${id}/submissions`, {
     params: { userId: user.id },
   });
   return response.data;
 }
 
-export async function DeleteForm(id: number) {
+export async function DeleteForm(id: string) {
   const user = await getCurrentUser();
-  const response = await axios.delete(`${API_BASE_URL}/forms/${id}`, {
+  const response = await axiosInstance.delete(`/api/forms/${id}`, {
     params: { userId: user.id },
   });
   return response.data;
 }
 
-export async function deleteElementInstance(id: number, elementId: string) {
+export async function deleteElementInstance(id: string, elementId: string) {
   const user = await getCurrentUser();
-  const response = await axios.put(
-    `${API_BASE_URL}/forms/${id}/delete-element`,
-    {
-      userId: user.id,
-      elementId,
-    }
-  );
+  const response = await axiosInstance.put(`/api/forms/${id}/delete-element`, {
+    userId: user.id,
+    elementId,
+  });
   return response.data;
 }

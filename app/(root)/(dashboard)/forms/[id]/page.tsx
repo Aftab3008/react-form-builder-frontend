@@ -115,7 +115,7 @@ type Row = { [key: string]: string } & {
   submitted: string;
 };
 
-async function SubMissionTable({ id }: { id: String }) {
+async function SubMissionTable({ id }: { id: string }) {
   const form = await GetFormSubmissions(id);
 
   if (!form) {

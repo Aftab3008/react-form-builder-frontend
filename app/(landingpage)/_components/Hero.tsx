@@ -5,13 +5,14 @@ import { Button } from "@/components/ui/button";
 import { soria } from "@/lib/fonts";
 import { hero } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
+import { useAuthStore } from "@/store/store";
 import { ChevronRight, Github } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import reactStringReplace from "react-string-replace";
 
 export default function Hero() {
-  const isSignedIn = true;
+  const isSignedIn = useAuthStore((state) => state.isAuthenticated);
 
   return (
     <section className="py-10">
@@ -55,12 +56,6 @@ export default function Hero() {
               </Link>
             </Button>
           )}
-          <Button asChild variant={"outline"}>
-            <Link href={"https://github.com/aafrzl/next-form"} target="_blank">
-              <Github className="mr-2 h-5 w-5" />
-              Star on Github
-            </Link>
-          </Button>
         </div>
         <div className="mt-16 flex justify-center px-5 sm:px-0">
           <Image

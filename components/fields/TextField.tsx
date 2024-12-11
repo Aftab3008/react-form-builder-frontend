@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
 import {
   ElementsType,
   FormElement,
   FormElementInstance,
   SubmitFunction,
-} from '@/app/(dashboard)/_components/FormElements';
-import { Label } from '@radix-ui/react-label';
-import { Type } from 'lucide-react';
-import { Input } from '../ui/input';
-import { z } from 'zod';
-import { useDesginerStore } from '@/store/store';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useState } from 'react';
+} from "@/app/(root)/(dashboard)/_components/FormElements";
+import { Label } from "@radix-ui/react-label";
+import { Type } from "lucide-react";
+import { Input } from "../ui/input";
+import { z } from "zod";
+import { useDesginerStore } from "@/store/store";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
 import {
   Form,
   FormControl,
@@ -22,18 +22,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../ui/form';
-import { Switch } from '../ui/switch';
-import { Textarea } from '../ui/textarea';
-import { cn } from '@/lib/utils';
+} from "../ui/form";
+import { Switch } from "../ui/switch";
+import { Textarea } from "../ui/textarea";
+import { cn } from "@/lib/utils";
 
-const type: ElementsType = 'TextField';
+const type: ElementsType = "TextField";
 
 const extraAttributes = {
-  label: 'Text Field',
-  helperText: 'Helper Text',
+  label: "Text Field",
+  helperText: "Helper Text",
   required: false,
-  placeholder: 'Placeholder',
+  placeholder: "Placeholder",
 };
 
 const propertiesSchema = z.object({
@@ -52,13 +52,16 @@ export const TextFieldFormElement: FormElement = {
   }),
   designerBtnElement: {
     icon: <Type className="h-8 w-8" />,
-    label: 'TextField',
+    label: "TextField",
   },
   designerComponent: DesignerComponent,
   formComponent: FormComponent,
   propertiesComponent: PropertiesComponent,
 
-  validate: (formElement: FormElementInstance, currentValue: string): boolean => {
+  validate: (
+    formElement: FormElementInstance,
+    currentValue: string
+  ): boolean => {
     const element = formElement as CustomInstance;
 
     if (element.extraAttributes.required) {
@@ -66,7 +69,7 @@ export const TextFieldFormElement: FormElement = {
     }
 
     return true;
-  }
+  },
 };
 
 type propertiesType = z.infer<typeof propertiesSchema>;
@@ -117,7 +120,8 @@ function PropertiesComponent({
         onSubmit={(e) => {
           e.preventDefault();
         }}
-        className="space-y-4">
+        className="space-y-4"
+      >
         <FormField
           control={form.control}
           name="label"
@@ -128,7 +132,7 @@ function PropertiesComponent({
                 <Input
                   {...field}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter') e.currentTarget.blur();
+                    if (e.key === "Enter") e.currentTarget.blur();
                   }}
                 />
               </FormControl>
@@ -150,7 +154,7 @@ function PropertiesComponent({
                 <Input
                   {...field}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter') e.currentTarget.blur();
+                    if (e.key === "Enter") e.currentTarget.blur();
                   }}
                 />
               </FormControl>
@@ -173,7 +177,7 @@ function PropertiesComponent({
                   {...field}
                   rows={3}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter') e.currentTarget.blur();
+                    if (e.key === "Enter") e.currentTarget.blur();
                   }}
                 />
               </FormControl>
@@ -230,11 +234,7 @@ function DesignerComponent({
         {label}
         {required && <span className="ml-2 text-red-500">*</span>}
       </Label>
-      <Input
-        readOnly
-        disabled
-        placeholder={placeholder}
-      />
+      <Input readOnly disabled placeholder={placeholder} />
       {helperText && (
         <p className="text-[.8rem] text-muted-foreground">{helperText}</p>
       )}
@@ -254,18 +254,18 @@ function FormComponent({
   defaultValues?: string;
 }) {
   const element = elementInstance as CustomInstance;
-  const [value, setValue] = useState(defaultValues || '');
+  const [value, setValue] = useState(defaultValues || "");
   const [error, setError] = useState(false);
 
   useEffect(() => {
     setError(isInvalid === true);
-  }, [isInvalid])
+  }, [isInvalid]);
 
   const { label, required, placeholder, helperText } = element.extraAttributes;
 
   return (
     <div className="flex w-full flex-col gap-2">
-      <Label className={cn("mr-2 text-foreground", error && 'text-red-500')}>
+      <Label className={cn("mr-2 text-foreground", error && "text-red-500")}>
         {label}
         {required && <span className="ml-2 text-red-500">*</span>}
       </Label>
@@ -277,14 +277,21 @@ function FormComponent({
           if (!submitFunction) return;
 
           const valid = TextFieldFormElement.validate(element, e.target.value);
-          setError(!valid)
+          setError(!valid);
           if (!valid) return;
 
-          submitFunction(element.id, e.target.value)
+          submitFunction(element.id, e.target.value);
         }}
       />
       {helperText && (
-        <p className={cn("text-[.8rem] text-muted-foreground", error && ("text-rose-500"))}>{helperText}</p>
+        <p
+          className={cn(
+            "text-[.8rem] text-muted-foreground",
+            error && "text-rose-500"
+          )}
+        >
+          {helperText}
+        </p>
       )}
     </div>
   );

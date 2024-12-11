@@ -1,4 +1,4 @@
-import { FormElementInstance } from "@/app/(dashboard)/_components/FormElements";
+import { FormElementInstance } from "@/app/(root)/(dashboard)/_components/FormElements";
 import { GetFormContentByUrl } from "@/app/_actions/form";
 import FormSubmitComponent from "../../_components/FormSubmitComponent";
 

@@ -5,7 +5,7 @@ import { useDesginerStore } from "@/store/store";
 import { Loader2, Save } from "lucide-react";
 import { useTransition } from "react";
 
-export default function SaveFormBtn({ id }: { id: number }) {
+export default function SaveFormBtn({ id }: { id: string }) {
   const { elements } = useDesginerStore();
   const [loading, startTransition] = useTransition();
 

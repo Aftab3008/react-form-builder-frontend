@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
 import {
   ElementsType,
   FormElement,
   FormElementInstance,
   SubmitFunction,
-} from '@/app/(dashboard)/_components/FormElements';
-import { cn } from '@/lib/utils';
-import { useDesginerStore } from '@/store/store';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Label } from '@radix-ui/react-label';
-import { MenuSquare, Plus, X } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+} from "@/app/(root)/(dashboard)/_components/FormElements";
+import { cn } from "@/lib/utils";
+import { useDesginerStore } from "@/store/store";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Label } from "@radix-ui/react-label";
+import { MenuSquare, Plus, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import {
   Form,
   FormControl,
@@ -22,22 +22,28 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../ui/form';
-import { Input } from '../ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import { Switch } from '../ui/switch';
-import { Textarea } from '../ui/textarea';
-import { Separator } from '../ui/separator';
-import { Button } from '../ui/button';
-import { toast } from '../ui/use-toast';
+} from "../ui/form";
+import { Input } from "../ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { Switch } from "../ui/switch";
+import { Textarea } from "../ui/textarea";
+import { Separator } from "../ui/separator";
+import { Button } from "../ui/button";
+import { toast } from "../ui/use-toast";
 
-const type: ElementsType = 'SelectField';
+const type: ElementsType = "SelectField";
 
 const extraAttributes = {
-  label: 'Select Field',
-  helperText: 'Helper Text',
+  label: "Select Field",
+  helperText: "Helper Text",
   required: false,
-  placeholder: 'Placeholder',
+  placeholder: "Placeholder",
   options: [],
 };
 
@@ -58,13 +64,16 @@ export const SelectFieldFormElement: FormElement = {
   }),
   designerBtnElement: {
     icon: <MenuSquare className="h-8 w-8" />,
-    label: 'Select Field',
+    label: "Select Field",
   },
   designerComponent: DesignerComponent,
   formComponent: FormComponent,
   propertiesComponent: PropertiesComponent,
 
-  validate: (formElement: FormElementInstance, currentValue: string): boolean => {
+  validate: (
+    formElement: FormElementInstance,
+    currentValue: string
+  ): boolean => {
     const element = formElement as CustomInstance;
 
     if (element.extraAttributes.required) {
@@ -72,7 +81,7 @@ export const SelectFieldFormElement: FormElement = {
     }
 
     return true;
-  }
+  },
 };
 
 type propertiesType = z.infer<typeof propertiesSchema>;
@@ -86,11 +95,12 @@ function PropertiesComponent({
 
   const { updateElement, setSelectedElement } = useDesginerStore();
 
-  const { label, helperText, placeholder, required, options } = element.extraAttributes;
+  const { label, helperText, placeholder, required, options } =
+    element.extraAttributes;
 
   const form = useForm<propertiesType>({
     resolver: zodResolver(propertiesSchema),
-    mode: 'onSubmit',
+    mode: "onSubmit",
     defaultValues: {
       label: label,
       helperText: helperText,
@@ -121,15 +131,13 @@ function PropertiesComponent({
     toast({
       title: "success",
       description: "Changes applied successfully",
-    })
-    setSelectedElement(null)
+    });
+    setSelectedElement(null);
   }
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(applyChanges)}
-        className="space-y-4">
+      <form onSubmit={form.handleSubmit(applyChanges)} className="space-y-4">
         <FormField
           control={form.control}
           name="label"
@@ -140,7 +148,7 @@ function PropertiesComponent({
                 <Input
                   {...field}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter') e.currentTarget.blur();
+                    if (e.key === "Enter") e.currentTarget.blur();
                   }}
                 />
               </FormControl>
@@ -162,7 +170,7 @@ function PropertiesComponent({
                 <Input
                   {...field}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter') e.currentTarget.blur();
+                    if (e.key === "Enter") e.currentTarget.blur();
                   }}
                 />
               </FormControl>
@@ -185,7 +193,7 @@ function PropertiesComponent({
                   {...field}
                   rows={3}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter') e.currentTarget.blur();
+                    if (e.key === "Enter") e.currentTarget.blur();
                   }}
                 />
               </FormControl>
@@ -203,53 +211,52 @@ function PropertiesComponent({
           name="options"
           render={({ field }) => (
             <FormItem>
-              <div className='flex items-center justify-between'>
+              <div className="flex items-center justify-between">
                 <FormLabel>Options</FormLabel>
                 <Button
-                  variant={'outline'}
-                  size={'sm'}
+                  variant={"outline"}
+                  size={"sm"}
                   onClick={(e) => {
                     e.preventDefault();
-                    form.setValue('options', field.value.concat('New Options'))
+                    form.setValue("options", field.value.concat("New Options"));
                   }}
                 >
-                  <Plus className='mr-2 h-5 w-5' />
+                  <Plus className="mr-2 h-5 w-5" />
                   Add Options
                 </Button>
               </div>
-              <div className='flex flex-col gap-2'>
-                {
-                  form.watch('options').map((option, index) => (
-                    <div
-                      key={index}
-                      className='flex items-center justify-between gap-1'
+              <div className="flex flex-col gap-2">
+                {form.watch("options").map((option, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between gap-1"
+                  >
+                    <Input
+                      placeholder=""
+                      value={option}
+                      onChange={(e) => {
+                        field.value[index] = e.target.value;
+                        field.onChange(field.value);
+                      }}
+                    />
+                    <Button
+                      variant={"ghost"}
+                      size={"icon"}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        const newOptions = [...field.value];
+                        newOptions.splice(index, 1);
+                        field.onChange(newOptions);
+                      }}
                     >
-                      <Input
-                        placeholder=''
-                        value={option}
-                        onChange={(e) => {
-                          field.value[index] = e.target.value;
-                          field.onChange(field.value)
-                        }}
-                      />
-                      <Button
-                        variant={'ghost'}
-                        size={'icon'}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          const newOptions = [...field.value];
-                          newOptions.splice(index, 1);
-                          field.onChange(newOptions);
-                        }}
-                      >
-                        <X className='h-5 w-5' />
-                      </Button>
-                    </div>
-                  ))
-                }
+                      <X className="h-5 w-5" />
+                    </Button>
+                  </div>
+                ))}
               </div>
               <FormDescription>
-                By clicking on the button you can add new options to the select field.
+                By clicking on the button you can add new options to the select
+                field.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -278,7 +285,9 @@ function PropertiesComponent({
           )}
         />
         <Separator />
-        <Button type="submit" className='w-full text-zinc-50'>Apply Changes</Button>
+        <Button type="submit" className="w-full text-zinc-50">
+          Apply Changes
+        </Button>
       </form>
     </Form>
   );
@@ -304,7 +313,7 @@ function DesignerComponent({
         {required && <span className="ml-2 text-red-500">*</span>}
       </Label>
       <Select>
-        <SelectTrigger className='w-full'>
+        <SelectTrigger className="w-full">
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
       </Select>
@@ -327,18 +336,19 @@ function FormComponent({
   defaultValues?: string;
 }) {
   const element = elementInstance as CustomInstance;
-  const [value, setValue] = useState(defaultValues || '');
+  const [value, setValue] = useState(defaultValues || "");
   const [error, setError] = useState(false);
 
   useEffect(() => {
     setError(isInvalid === true);
-  }, [isInvalid])
+  }, [isInvalid]);
 
-  const { label, required, placeholder, helperText, options } = element.extraAttributes;
+  const { label, required, placeholder, helperText, options } =
+    element.extraAttributes;
 
   return (
     <div className="flex w-full flex-col gap-2">
-      <Label className={cn("mr-2 text-foreground", error && 'text-red-500')}>
+      <Label className={cn("mr-2 text-foreground", error && "text-red-500")}>
         {label}
         {required && <span className="ml-2 text-red-500">*</span>}
       </Label>
@@ -352,7 +362,7 @@ function FormComponent({
           submitFunction(element.id, value);
         }}
       >
-        <SelectTrigger className={cn('w-full', error && "border-red-500")}>
+        <SelectTrigger className={cn("w-full", error && "border-red-500")}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
@@ -364,7 +374,14 @@ function FormComponent({
         </SelectContent>
       </Select>
       {helperText && (
-        <p className={cn("text-[.8rem] text-muted-foreground", error && ("text-rose-500"))}>{helperText}</p>
+        <p
+          className={cn(
+            "text-[.8rem] text-muted-foreground",
+            error && "text-rose-500"
+          )}
+        >
+          {helperText}
+        </p>
       )}
     </div>
   );

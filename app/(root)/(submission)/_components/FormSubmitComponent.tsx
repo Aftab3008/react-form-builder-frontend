@@ -3,7 +3,7 @@
 import {
   FormElementInstance,
   FormElements,
-} from "@/app/(dashboard)/_components/FormElements";
+} from "@/app/(root)/(dashboard)/_components/FormElements";
 import { SubmitForm } from "@/app/_actions/form";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";

@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
 import {
   ElementsType,
   FormElement,
   FormElementInstance,
   SubmitFunction,
-} from '@/app/(dashboard)/_components/FormElements';
-import { Calendar } from 'lucide-react';
-import { Input } from '../ui/input';
-import { z } from 'zod';
-import { useDesginerStore } from '@/store/store';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useState } from 'react';
+} from "@/app/(root)/(dashboard)/_components/FormElements";
+import { Calendar } from "lucide-react";
+import { Input } from "../ui/input";
+import { z } from "zod";
+import { useDesginerStore } from "@/store/store";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
 import {
   Form,
   FormControl,
@@ -21,21 +21,21 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../ui/form';
-import { Switch } from '../ui/switch';
-import { Textarea } from '../ui/textarea';
-import { cn } from '@/lib/utils';
-import { Button } from '../ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { Label } from '../ui/label';
-import { format } from 'date-fns';
-import { Calendar as CalendarComponent } from '../ui/calendar';
+} from "../ui/form";
+import { Switch } from "../ui/switch";
+import { Textarea } from "../ui/textarea";
+import { cn } from "@/lib/utils";
+import { Button } from "../ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Label } from "../ui/label";
+import { format } from "date-fns";
+import { Calendar as CalendarComponent } from "../ui/calendar";
 
-const type: ElementsType = 'DateField';
+const type: ElementsType = "DateField";
 
 const extraAttributes = {
-  label: 'Date Field',
-  helperText: 'Helper Text',
+  label: "Date Field",
+  helperText: "Helper Text",
   required: false,
 };
 
@@ -54,13 +54,16 @@ export const DateFieldFormElement: FormElement = {
   }),
   designerBtnElement: {
     icon: <Calendar className="h-8 w-8" />,
-    label: 'Date Field',
+    label: "Date Field",
   },
   designerComponent: DesignerComponent,
   formComponent: FormComponent,
   propertiesComponent: PropertiesComponent,
 
-  validate: (formElement: FormElementInstance, currentValue: string): boolean => {
+  validate: (
+    formElement: FormElementInstance,
+    currentValue: string
+  ): boolean => {
     const element = formElement as CustomInstance;
 
     if (element.extraAttributes.required) {
@@ -68,7 +71,7 @@ export const DateFieldFormElement: FormElement = {
     }
 
     return true;
-  }
+  },
 };
 
 type propertiesType = z.infer<typeof propertiesSchema>;
@@ -117,7 +120,8 @@ function PropertiesComponent({
         onSubmit={(e) => {
           e.preventDefault();
         }}
-        className="space-y-4">
+        className="space-y-4"
+      >
         <FormField
           control={form.control}
           name="label"
@@ -128,7 +132,7 @@ function PropertiesComponent({
                 <Input
                   {...field}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter') e.currentTarget.blur();
+                    if (e.key === "Enter") e.currentTarget.blur();
                   }}
                 />
               </FormControl>
@@ -151,7 +155,7 @@ function PropertiesComponent({
                   {...field}
                   rows={3}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter') e.currentTarget.blur();
+                    if (e.key === "Enter") e.currentTarget.blur();
                   }}
                 />
               </FormControl>
@@ -209,10 +213,10 @@ function DesignerComponent({
         {required && <span className="ml-2 text-red-500">*</span>}
       </Label>
       <Button
-        variant={'outline'}
-        className='w-full justify-start text-left font-normal'
+        variant={"outline"}
+        className="w-full justify-start text-left font-normal"
       >
-        <Calendar className='mr-2 h-4 w-4' />
+        <Calendar className="mr-2 h-4 w-4" />
         <span>Pick a date</span>
       </Button>
       {helperText && (
@@ -235,34 +239,39 @@ function FormComponent({
 }) {
   const element = elementInstance as CustomInstance;
 
-  const [date, setDate] = useState<Date | undefined>(defaultValues ? new Date(defaultValues) : undefined)
+  const [date, setDate] = useState<Date | undefined>(
+    defaultValues ? new Date(defaultValues) : undefined
+  );
 
   const [error, setError] = useState(false);
 
   useEffect(() => {
     setError(isInvalid === true);
-  }, [isInvalid])
+  }, [isInvalid]);
 
   const { label, required, helperText } = element.extraAttributes;
 
   return (
     <div className="flex w-full flex-col gap-2">
-      <Label className={cn("mr-2 text-foreground", error && 'text-red-500')}>
+      <Label className={cn("mr-2 text-foreground", error && "text-red-500")}>
         {label}
         {required && <span className="ml-2 text-red-500">*</span>}
       </Label>
       <Popover>
         <PopoverTrigger asChild>
           <Button
-            variant={'outline'}
-            className={cn('w-full justify-start text-left font-normal',
-              error && 'border-rose-500', !date && 'text-muted-foreground')}
+            variant={"outline"}
+            className={cn(
+              "w-full justify-start text-left font-normal",
+              error && "border-rose-500",
+              !date && "text-muted-foreground"
+            )}
           >
-            <Calendar className='mr-2 h-4 w-4' />
-            {date ? format(date, 'PPP') : <span>Pick a date</span>}
+            <Calendar className="mr-2 h-4 w-4" />
+            {date ? format(date, "PPP") : <span>Pick a date</span>}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className='w-auto p-0' align='start'>
+        <PopoverContent className="w-auto p-0" align="start">
           <CalendarComponent
             mode="single"
             selected={date}
@@ -270,7 +279,7 @@ function FormComponent({
               setDate(date);
 
               if (!submitFunction) return;
-              const value = date?.toUTCString() || '';
+              const value = date?.toUTCString() || "";
               const valid = DateFieldFormElement.validate(element, value);
               setError(!valid);
               submitFunction(element.id, value);
@@ -280,7 +289,14 @@ function FormComponent({
         </PopoverContent>
       </Popover>
       {helperText && (
-        <p className={cn("text-[.8rem] text-muted-foreground", error && ("text-rose-500"))}>{helperText}</p>
+        <p
+          className={cn(
+            "text-[.8rem] text-muted-foreground",
+            error && "text-rose-500"
+          )}
+        >
+          {helperText}
+        </p>
       )}
     </div>
   );

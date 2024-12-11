@@ -6,11 +6,10 @@ import { Button } from "./ui/button";
 import { LogIn } from "lucide-react";
 import Logo from "./Logo";
 import Link from "next/link";
+import { useAuthStore } from "@/store/store";
 
 export default function Navbar() {
-  const user = {
-    email: "test@gmail.com",
-  };
+  const user = useAuthStore((state) => state.isAuthenticated);
 
   return (
     <nav className="flex h-[64px] items-center justify-between border-b border-border px-4 shadow-md">

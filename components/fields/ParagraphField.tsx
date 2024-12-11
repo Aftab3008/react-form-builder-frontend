@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
 import {
   ElementsType,
   FormElement,
-  FormElementInstance
-} from '@/app/(dashboard)/_components/FormElements';
-import { useDesginerStore } from '@/store/store';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Label } from '@radix-ui/react-label';
-import { Pilcrow } from 'lucide-react';
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+  FormElementInstance,
+} from "@/app/(root)/(dashboard)/_components/FormElements";
+import { useDesginerStore } from "@/store/store";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Label } from "@radix-ui/react-label";
+import { Pilcrow } from "lucide-react";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import {
   Form,
   FormControl,
@@ -20,13 +20,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../ui/form';
-import { Textarea } from '../ui/textarea';
+} from "../ui/form";
+import { Textarea } from "../ui/textarea";
 
-const type: ElementsType = 'ParagraphField';
+const type: ElementsType = "ParagraphField";
 
 const extraAttributes = {
-  title: 'Text Field',
+  title: "Text Field",
 };
 
 const propertiesSchema = z.object({
@@ -42,7 +42,7 @@ export const ParagraphFieldFormElement: FormElement = {
   }),
   designerBtnElement: {
     icon: <Pilcrow className="h-8 w-8" />,
-    label: 'Text Field',
+    label: "Text Field",
   },
   designerComponent: DesignerComponent,
   formComponent: FormComponent,
@@ -60,7 +60,7 @@ function FormComponent({
 
   const { title } = element.extraAttributes;
 
-  return <p className='text-sm'>{title}</p>
+  return <p className="text-sm">{title}</p>;
 }
 
 type CustomInstance = FormElementInstance & {
@@ -78,8 +78,8 @@ function DesignerComponent({
 
   return (
     <div className="flex w-full flex-col gap-2">
-      <Label className='text-muted-foreground'>Paragraph Field</Label>
-      <p className='text-sm'>{title}</p>
+      <Label className="text-muted-foreground">Paragraph Field</Label>
+      <p className="text-sm">{title}</p>
     </div>
   );
 }
@@ -124,7 +124,8 @@ function PropertiesComponent({
         onSubmit={(e) => {
           e.preventDefault();
         }}
-        className="space-y-4">
+        className="space-y-4"
+      >
         <FormField
           control={form.control}
           name="title"
@@ -136,7 +137,7 @@ function PropertiesComponent({
                   rows={5}
                   {...field}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter') e.currentTarget.blur();
+                    if (e.key === "Enter") e.currentTarget.blur();
                   }}
                 />
               </FormControl>
@@ -151,5 +152,3 @@ function PropertiesComponent({
     </Form>
   );
 }
-
-

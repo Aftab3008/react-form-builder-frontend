@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
 import {
   ElementsType,
   FormElement,
-  FormElementInstance
-} from '@/app/(dashboard)/_components/FormElements';
-import { useDesginerStore } from '@/store/store';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Label } from '@radix-ui/react-label';
-import { Subtitles } from 'lucide-react';
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+  FormElementInstance,
+} from "@/app/(root)/(dashboard)/_components/FormElements";
+import { useDesginerStore } from "@/store/store";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Label } from "@radix-ui/react-label";
+import { Subtitles } from "lucide-react";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import {
   Form,
   FormControl,
@@ -20,13 +20,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../ui/form';
-import { Input } from '../ui/input';
+} from "../ui/form";
+import { Input } from "../ui/input";
 
-const type: ElementsType = 'SubTitleField';
+const type: ElementsType = "SubTitleField";
 
 const extraAttributes = {
-  title: 'Subtitle Field',
+  title: "Subtitle Field",
 };
 
 const propertiesSchema = z.object({
@@ -42,7 +42,7 @@ export const SubTitleFieldFormElement: FormElement = {
   }),
   designerBtnElement: {
     icon: <Subtitles className="h-8 w-8" />,
-    label: 'Subtitle Field',
+    label: "Subtitle Field",
   },
   designerComponent: DesignerComponent,
   formComponent: FormComponent,
@@ -60,7 +60,7 @@ function FormComponent({
 
   const { title } = element.extraAttributes;
 
-  return <p className='text-lg'>{title}</p>
+  return <p className="text-lg">{title}</p>;
 }
 
 type CustomInstance = FormElementInstance & {
@@ -78,8 +78,8 @@ function DesignerComponent({
 
   return (
     <div className="flex w-full flex-col gap-2">
-      <Label className='text-muted-foreground'>Subtitle Field</Label>
-      <p className='text-lg'>{title}</p>
+      <Label className="text-muted-foreground">Subtitle Field</Label>
+      <p className="text-lg">{title}</p>
     </div>
   );
 }
@@ -124,7 +124,8 @@ function PropertiesComponent({
         onSubmit={(e) => {
           e.preventDefault();
         }}
-        className="space-y-4">
+        className="space-y-4"
+      >
         <FormField
           control={form.control}
           name="title"
@@ -135,12 +136,13 @@ function PropertiesComponent({
                 <Input
                   {...field}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter') e.currentTarget.blur();
+                    if (e.key === "Enter") e.currentTarget.blur();
                   }}
                 />
               </FormControl>
               <FormDescription>
-                Add a subtitle to your form to give more information to your users.
+                Add a subtitle to your form to give more information to your
+                users.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -150,5 +152,3 @@ function PropertiesComponent({
     </Form>
   );
 }
-
-
