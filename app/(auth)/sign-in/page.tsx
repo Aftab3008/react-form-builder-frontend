@@ -19,7 +19,6 @@ type LoginForm = z.infer<typeof loginSchema>;
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const { login, error } = useAuthStore();
-  const router = useRouter();
 
   const {
     register,
@@ -32,9 +31,6 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginForm) => {
     try {
       const res = await login(data);
-      if (res) {
-        router.push("/dashboard");
-      }
     } catch (error) {}
   };
 

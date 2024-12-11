@@ -87,6 +87,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
           password,
         }
       );
+
       set({
         user: response.data,
         isAuthenticated: true,
@@ -145,9 +146,9 @@ export const useAuthStore = create<AuthStore>((set) => ({
       });
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        set({ error: error.response?.data?.message, isCheckingAuth: false });
+        set({ error: null, isCheckingAuth: false });
       } else {
-        set({ error: String(error), isCheckingAuth: false });
+        set({ error: null, isCheckingAuth: false });
       }
     }
   },

@@ -19,7 +19,6 @@ export default function Page() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { signup, error } = useAuthStore();
-  const router = useRouter();
 
   const {
     register,
@@ -32,9 +31,6 @@ export default function Page() {
   const onSubmit = async (data: SignUpForm) => {
     try {
       const res = await signup(data);
-      if (res) {
-        router.push("/dashboard");
-      }
     } catch (error) {
       console.error(error);
     }

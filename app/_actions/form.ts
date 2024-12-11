@@ -28,13 +28,13 @@ export async function getUserFromCookies() {
   if (!token) {
     throw new Error("User token is missing");
   }
-
   return jwtDecode<{ userId: string }>(token.value);
 }
 
 async function getCurrentUser() {
-  const { userId } = await getUserFromCookies();
-  if (!userId) throw new UserNotFoundErr();
+  const user = await getUserFromCookies();
+  if (!user || !user.userId) throw new UserNotFoundErr();
+  const { userId } = user;
   return { id: userId };
 }
 

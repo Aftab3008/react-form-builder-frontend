@@ -1,10 +1,10 @@
-import { GetFormStats } from "@/app/_actions/form";
 import { Separator } from "@/components/ui/separator";
-import StatsCard from "../_components/StatsCard";
 import { Suspense } from "react";
 import CreateFormBtn from "../_components/CreateFormBtn";
 import FormCardSkeleton from "../_components/FormCardSkeleton";
 import FormCards from "../_components/FormCards";
+import StatsCard from "../_components/StatsCard";
+import { CardStatsWrapper } from "./CardStatsWrapper";
 
 export default function DashboardPage() {
   return (
@@ -27,9 +27,4 @@ export default function DashboardPage() {
       </div>
     </div>
   );
-}
-
-async function CardStatsWrapper() {
-  const stats = await GetFormStats();
-  return <StatsCard loading={false} data={stats} />;
 }

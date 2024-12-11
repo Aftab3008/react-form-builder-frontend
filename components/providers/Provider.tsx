@@ -22,8 +22,9 @@ export default function Provider({ children }: { children: React.ReactNode }) {
   }
 
   if (isAuthenticated && !isCheckingAuth) {
-    router.push("/dashboard");
-    return null;
+    setTimeout(() => {
+      router.push("/dashboard");
+    }, 2000);
   }
   return <>{children}</>;
 }
